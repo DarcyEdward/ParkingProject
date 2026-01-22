@@ -28,20 +28,19 @@ def index():
 def register(username: str = Form(...), password: str = Form(...), password2: str = Form(...)):
 
     if password != password2:
-        raise HTTPException(status_code=303, detail="Passwords did not match.")
+        return {"success": False,"message": "Passwords must match!" }
 
     if len(username) < 5 or len(password) < 5:
-        raise HTTPException(status_code=304, detail="All inputs are not 5 characters or more.")
+        return {"success": False,"message": "Username must be at least 5 characters long." }
+
+
+
+    #TODO: adding the user to the database here.
 
 
 
 
 
 
-
-
-
-
-
-    return {"success": True}
+    return {"success": True,"message": "User created successfully." }
 

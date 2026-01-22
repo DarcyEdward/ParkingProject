@@ -4,18 +4,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const password2 = document.getElementById("password2").value;
-    const errorMsg = document.getElementById("errorMsg");
-    errorMsg.style = "color: #b12929;";
 
-    if(username.length < 4 || password.length < 4) {
-        errorMsg.textContent = "Both your username and password need to be at least 5 characters.";
-        return;
-    }
-
-    if (password !== password2) {
-        errorMsg.textContent = "Passwords do not match";
-        return;
-    }
 
     //create the table for the backend.
     const formData = new FormData();
@@ -29,21 +18,21 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         body: formData
     });
 
-    //If the response is not good this will happen...
+    const data = await res.json();
 
-    if (res.status != 200) {
-        const data = await res.json();
-        errorMsg.textContent = data.detail;
+
+    if (!data.success) {
+        showToast(data.message, "error");
         return;
     }
 
-    errorMsg.style.color = "green";
-    errorMsg.textContent = "Registered successfully!";
-
     //sends the user to the login page.
+    showToast(data.message, "success");
+
     setTimeout(() => {
     window.location.href = "/static/login.html";
     }, 500);
+
 
 });
 
