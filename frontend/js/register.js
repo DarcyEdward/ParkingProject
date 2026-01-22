@@ -30,7 +30,8 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     });
 
     //If the response is not good this will happen...
-    if (!res.ok) {
+
+    if (res.status != 200) {
         const data = await res.json();
         errorMsg.textContent = data.detail;
         return;

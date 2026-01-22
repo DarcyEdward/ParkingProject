@@ -27,8 +27,21 @@ def index():
 @app.post("/register")
 def register(username: str = Form(...), password: str = Form(...), password2: str = Form(...)):
 
-    print("roger roger, this is being sent...")
-
     if password != password2:
-        return RedirectResponse(url="/static/register.html", status_code=303)
+        raise HTTPException(status_code=303, detail="Passwords did not match.")
+
+    if len(username) < 5 or len(password) < 5:
+        raise HTTPException(status_code=304, detail="All inputs are not 5 characters or more.")
+
+
+
+
+
+
+
+
+
+
+
+    return {"success": True}
 
