@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: #3b75d9;
+
+    display: flex; /*Turns full display into flexible containter*/
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+
+    font-family: Courier New, monospace;
+}
+
+head{
+    position: absolute;
+    top: 20px;
+    justify-content: space-around;
+}
+
+.register{
+
+}
+
+.login{
+
+}
+
+.logon{
+
+}
+
+button{
+    background-color: black;
+    font-family: Courier New, monospace;
+    color: white;
+}

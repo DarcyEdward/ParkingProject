@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Register - EzParking</title>
+</head>
+<body>
+    <div class = "register">
+    <h1>Register an account.</h1>
+        <form id="registerForm">
+            <label for="username">Name:</label><br>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <label for="password2">Password Again:</label><br>
+            <input type="password" id="password2" name="password2" required><br><br>
+
+            <p id="errorMsg"></p>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<script src="/static/js/register.js" defer></script>
