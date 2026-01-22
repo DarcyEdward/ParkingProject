@@ -2,6 +2,7 @@ from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+import re
 
 from starlette.responses import RedirectResponse
 
@@ -21,22 +22,26 @@ def index():
     with open(FRONTEND_DIR / "index.html") as f:
         return f.read()
 
-###################
+##################
 
 
 @app.post("/register")
-def register(username: str = Form(...), password: str = Form(...), password2: str = Form(...)):
+def register(email: str = Form(...), password: str = Form(...), password2: str = Form(...)):
 
+    #Checking if legit password.
     if password != password2:
         return {"success": False,"message": "Passwords must match!" }
+    if len(password) < 5:
+        return {"success": False, "message": "Password must be at least 5 characters!" }
 
-    if len(username) < 5 or len(password) < 5:
-        return {"success": False,"message": "Username must be at least 5 characters long." }
-
+    #Checking if it's a legit email.
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if not re.match(pattern, email):
+        return {"success": False, "message": "Email must be a valid email..."}
 
 
     #TODO: adding the user to the database here.
-
+    
 
 
 

@@ -1,16 +1,13 @@
 document.getElementById("registerForm").addEventListener("submit", async function(e) {
     e.preventDefault(); // 🚫 stop page change
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const password2 = document.getElementById("password2").value;
-
 
     //create the table for the backend.
     const formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
-    formData.append("password2", password2);
+    formData.append("email", document.getElementById("email").value);
+    formData.append("password", document.getElementById("password").value);
+    formData.append("password2", document.getElementById("password2").value);
+
 
     //Sends the data to the backend
     const res = await fetch("/register", {

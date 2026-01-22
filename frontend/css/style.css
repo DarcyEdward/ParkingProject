@@ -34,6 +34,8 @@ button{
     color: white;
 }
 
+/* Toast notification system below! */
+
 #toast-container {
     position: fixed;
     top: 20px;
