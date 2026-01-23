@@ -5,19 +5,30 @@
     <title>Login - EzParking</title>
 </head>
 <body>
-    <div class = "login">
-    <h1>Login</h1>
-        <form>
-            <label for="username">Name:</label><br>
-            <input type="text" id="username" name="username" required><br><br>
 
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required><br><br>
+    <header class="header">
+        <h1>EzParking</h1>
+    </header>
 
-            <button type="submit">Login</button>
+
+    <div class = "form-container">
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" required><br><br>
+
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+                <a href = "index.html"><p><u>Forgot Password?</u></p></a>
+
+                <div class="center-buttons">
+                    <button type="submit">Login</button>
+                </div>
+            </div>
         </form>
     </div>
 </body>
 </html>
 
+<script src="/static/js/login.js" defer></script>
 <script src="/static/js/showToast.js" defer></script>

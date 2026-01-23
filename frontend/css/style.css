@@ -1,38 +1,97 @@
+/* General body */
 body {
     margin: 0;
     height: 100vh;
-    background: #3b75d9;
-
-    display: flex; /*Turns full display into flexible containter*/
-    justify-content: center; /* Centers horizontally */
-    align-items: center;     /* Centers vertically */
-
+    background: #434343;
     font-family: Courier New, monospace;
+
+    display: flex;
+    flex-direction: column; /* Stack header + center-buttons */
 }
 
-head{
-    position: absolute;
-    top: 20px;
-    justify-content: space-around;
-}
-
-.register{
-
-}
-
-.login{
-
-}
-
-.logon{
-
-}
-
-button{
-    background-color: black;
-    font-family: Courier New, monospace;
+/* Header at top-left */
+.header {
+    padding: 20px;
     color: white;
 }
+
+.header h1 {
+    margin: 0;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.1); /* semi-transparent background */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+}
+
+.input-group input {
+    padding: 12px 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.input-group label {
+    position: relative;
+    left: 12px;
+    top: -5px;
+    color: #ccc;
+    pointer-events: none;
+    transition: 0.3s ease all;
+    font-size: 20px;
+}
+
+/* Center buttons container */
+.center-buttons {
+    flex: 1; /* Take all remaining vertical space */
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    gap: 30px; /* space between buttons */
+}
+
+/* Make buttons same size */
+.center-buttons button {
+    width: 300px; /* or any width you want */
+    height: 100px; /* uniform height */
+    font-size: 20px;
+    background-color: #333333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.center-buttons button:hover {
+    background-color: black;
+    transform: translateY(-2px);
+}
+
+.center-buttons button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
 
 /* Toast notification system below! */
 
