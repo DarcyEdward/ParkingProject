@@ -4,6 +4,8 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
     //create the table for the backend.
     const formData = new FormData();
+
+    formData.append("username", document.getElementById("username").value);
     formData.append("email", document.getElementById("email").value);
     formData.append("password", document.getElementById("password").value);
     formData.append("password2", document.getElementById("password2").value);
@@ -14,9 +16,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         method: "POST",
         body: formData
     });
-
     const data = await res.json();
-
 
     if (!data.success) {
         showToast(data.message, "error");
