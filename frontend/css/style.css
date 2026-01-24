@@ -11,9 +11,63 @@ body {
 
 /* Header at top-left */
 .header {
-    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* left & right */
+    align-items: center;            /* vertical alignment */
+    padding: 16px 24px;
     color: white;
+    background-color: rgba(0, 0, 0, 0.15);
 }
+
+.subtitle {
+    opacity: 0.5;          /* 70% opacity */
+    font-weight: normal;  /* optional: softer look */
+}
+
+
+.header-right {
+    flex: 1; /* Take all remaining vertical space */
+    display: flex;
+    justify-content: right; /* center horizontally */
+}
+
+/* Make buttons same size */
+.header-right button {
+    width: 150px; /* or any width you want */
+    height: 50px; /* uniform height */
+    font-size: 20px;
+    background-color: #292929;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-right button:hover {
+    background-color: black;
+    transform: translateY(-2px);
+}
+
+.header-right button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.title-link {
+    text-decoration: none;   /* remove underline */
+    color: inherit;          /* same color as header */
+}
+
+.title-link:hover,
+.title-link:visited,
+.title-link:active {
+    color: inherit;
+}
+
+
+
+
 
 .header h1 {
     margin: 0;

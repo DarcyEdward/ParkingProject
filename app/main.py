@@ -2,8 +2,8 @@ import mysql.connector
 from mysql.connector import Error
 import re
 import bcrypt
-from fastapi import FastAPI, Form, Depends
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Form, Depends, Response, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
@@ -22,9 +22,24 @@ app.mount("/static", StaticFiles(directory=FRONTEND_DIR, html=True), name="front
 
 #Send everyone to index.html
 @app.get("/", response_class=HTMLResponse)
-def index():
+def index(request: Request):
+    token = request.cookies.get("access_token")
+
+    if token:
+        return RedirectResponse("/dashboard")
+
     with open(FRONTEND_DIR / "index.html") as f:
-        print(int())
+        return f.read()
+
+@app.get("/dashboard", response_class=HTMLResponse)
+def dashboard(request: Request):
+    print("Dashboard")
+    token = request.cookies.get("access_token")
+
+    if not token:
+        return RedirectResponse("/")
+
+    with open(FRONTEND_DIR / "dashboard.html") as f:
         return f.read()
 
 @app.get("/me")
@@ -34,7 +49,13 @@ def me(user_id: int = Depends(get_current_user)):
         "user_id": user_id
     }
 
-
+@app.post("/logout")
+def me(response: Response):
+    response.delete_cookie(
+        key="access_token",
+        path="/"
+    )
+    return {"success": True, "message": "Successfully logged out!" }
 
 
 
