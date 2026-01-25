@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/dashStyle.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <title>EzParking - Dashboard</title>
 </head>
@@ -16,6 +17,33 @@
     </div>
 
 
+<div class="dashboard-container">
+  <div class="dashboard-grid">
+
+    <aside class="sidebar">
+      <div class="card">Hi, {{ user[1] }}!</div>
+      <div class="card cars-card">
+        <div class="card-header">
+          <span><b>YOUR CARS:</b></span>
+          <button class="add-btn" aria-label="Add car" id = "editCars">⚙</button>
+        </div>
+        {% if cars %}
+          {% for car in cars %}
+            <div class="car-item" data-car='{{ car }}'>{{ car[3] }} {{ car[4] }}</div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">None...</div>
+        {% endif %}
+
+
+      </div>
+
+    </aside>
+
+
+
+  </div>
+</div>
     <script src="/static/js/showToast.js" defer></script>
     <script src="/static/js/dashboard.js" defer></script>
 </body>

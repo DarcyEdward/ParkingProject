@@ -81,7 +81,10 @@ body {
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    min-width: 300px;
+    width: 100%;
+    max-width: calc(70% - 200px); /* 100px left + 100px right */
+    margin: 40px auto;             /* centers it */
+    flex-grow: 1;
 }
 
 .input-group input {
@@ -91,7 +94,7 @@ body {
     background: transparent;
     color: white;
     font-size: 16px;
-    width: 100%;
+    width: 98%;
     transition: border-color 0.3s, background 0.3s;
 }
 
@@ -177,4 +180,19 @@ body {
 
 @keyframes fadeOut {
     to { opacity: 0; transform: translateX(100%); }
+}
+
+.btn {
+  all: unset;              /* removes default button styles */
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.btn:hover {
+  color: white;
+  transform: scale(1.15);
+}
+
+.btn:active {
+  transform: scale(0.95);
 }

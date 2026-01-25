@@ -1,5 +1,17 @@
-//Logout button!!!
+document.getElementById("editCars").addEventListener("click", async () => {
 
+
+})
+
+
+
+
+
+
+
+
+
+//Logout button!!!
 document.getElementById("logoutButton").addEventListener("click", async () => {
 
     const res = await fetch("/logout", {
@@ -16,3 +28,5 @@ document.getElementById("logoutButton").addEventListener("click", async () => {
     }, 200);
 
 })
+
+

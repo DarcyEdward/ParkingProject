@@ -1,10 +1,10 @@
 import mysql.connector
-from mysql.connector import Error
 import re
 import bcrypt
-from fastapi import FastAPI, Form, Depends, Response, Request
+from fastapi import FastAPI, Form, Depends, Response, Request, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pathlib import Path
 
 from starlette.responses import JSONResponse
@@ -14,6 +14,7 @@ from app.auth import create_access_token, get_current_user
 
 
 app = FastAPI()
+templates = Jinja2Templates(directory="frontend")
 
 #STARTING SERVER
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,14 +34,36 @@ def index(request: Request):
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
-    print("Dashboard")
-    token = request.cookies.get("access_token")
+    try:
+        user_id = get_current_user(request)
 
-    if not token:
+    #If it's not a valid login, it sends the user back to the home page...
+    except HTTPException:
         return RedirectResponse("/")
 
-    with open(FRONTEND_DIR / "dashboard.html") as f:
-        return f.read()
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+            user_data = cursor.fetchone()
+
+            cursor.execute("SELECT * FROM cars WHERE user_id = %s", (user_id,))
+            cars_data = cursor.fetchall()
+
+    print(user_data)
+    print(cars_data)
+
+    #send the data to the frontend!
+
+    return templates.TemplateResponse(
+        "dashboard.html",
+        {
+            "request": request,
+            "user": user_data,
+            "cars": cars_data
+        }
+    )
+
 
 @app.get("/me")
 def me(user_id: int = Depends(get_current_user)):
@@ -56,8 +79,6 @@ def me(response: Response):
         path="/"
     )
     return {"success": True, "message": "Successfully logged out!" }
-
-
 
 
 

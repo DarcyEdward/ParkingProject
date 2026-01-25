@@ -1,0 +1,83 @@
+.dashboard-container {
+  max-width: calc(80% - 200px); /* 100px left + 100px right */
+  margin: 40px auto;             /* centers it */
+    color: white;
+    font-size: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05); /* subtle contrast */
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(6px);
+}
+
+.cars-card {
+  flex-grow: 1;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 140px); /* adjust for header/navbar */
+}
+
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+
+.big {
+  min-height: 500px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+    font-size: 25px;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+
+.car-item {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+@media (max-width: 900px) {
+  .dashboard-container {
+    max-width: 100%;
+    margin: 20px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.add-btn {
+  all: unset;              /* removes default button styles */
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.add-btn:hover {
+  color: white;
+  transform: scale(1.15);
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+}
+
+
+
+
