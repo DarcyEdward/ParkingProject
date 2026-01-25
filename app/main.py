@@ -24,13 +24,15 @@ app.mount("/static", StaticFiles(directory=FRONTEND_DIR, html=True), name="front
 #Send everyone to index.html
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
-    token = request.cookies.get("access_token")
-
-    if token:
+    try:
+        get_current_user(request)
         return RedirectResponse("/dashboard")
-
-    with open(FRONTEND_DIR / "index.html") as f:
-        return f.read()
+    except HTTPException:
+        response = HTMLResponse(
+            (FRONTEND_DIR / "index.html").read_text()
+        )
+        response.delete_cookie("access_token")
+        return response
 
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):

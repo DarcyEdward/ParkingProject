@@ -25,11 +25,11 @@
       <div class="card cars-card">
         <div class="card-header">
           <span><b>YOUR CARS:</b></span>
-          <button class="add-btn" aria-label="Add car" id = "editCars">⚙</button>
+          <button class="add-btn" aria-label="Add car" id = "editCars">+</button>
         </div>
         {% if cars %}
           {% for car in cars %}
-            <div class="car-item" data-car='{{ car }}'>{{ car[3] }} {{ car[4] }}</div>
+            <div class="car-item"><a href="/cars/edit?id={{ car[0] }}">✎ {{ car[3] }} {{ car[4] }}</a></div>
           {% endfor %}
         {% else %}
           <div class="empty-state">None...</div>
