@@ -34,6 +34,8 @@ def index(request: Request):
         response.delete_cookie("access_token")
         return response
 
+
+
 @app.get("/dashboard", response_class=HTMLResponse)
 def dashboard(request: Request):
     try:
@@ -81,8 +83,6 @@ def me(response: Response):
         path="/"
     )
     return {"success": True, "message": "Successfully logged out!" }
-
-
 
 
 ##################
@@ -194,3 +194,97 @@ def login(email: str = Form(...), password: str = Form(...)):
                 return response
 
     return {"success": False, "message": "Login credentials are invalid. Forgot password?" }
+
+
+
+
+
+
+
+
+##################
+
+#EDIT CARS!!
+
+##################
+
+@app.get("/cars/edit", response_class=HTMLResponse)
+def editCar(request: Request, id: int):
+    try:
+        user_id = get_current_user(request)
+
+    # If it's not a valid login, it sends the user back to the home page...
+    except HTTPException:
+        return RedirectResponse("/")
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM cars WHERE id = %s AND user_id = %s", (id,user_id))
+            user_cars = cursor.fetchone()
+
+    #Making sure the user actually owns the car.
+    if user_cars is None:
+        return RedirectResponse("/")
+
+    return templates.TemplateResponse(
+        "cars/edit.html",
+        {
+            "request": request,
+            "car": user_cars
+        }
+    )
+
+
+@app.post("/updateCar")
+def updateCar(request: Request, make: str = Form(...), model: str = Form(...), year: int = Form(...), plate: str = Form(...), color: str = Form(...), car_id: int = Form(...)):
+    print("update car")
+
+    try:
+        user_id = get_current_user(request)
+    except:
+        return RedirectResponse("/")
+
+    if int(year) > 2030 or int(year) < 1900:
+        return {"success": False, "message": "Year should be between 1900-2030!" }
+
+    if len(make) > 50 or len(model) > 50 or len(color) > 30 or len(plate) > 15:
+        return {"success": False, "message": "Please put the appropriate information!" }
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                """UPDATE cars
+                SET
+                    make = %s,
+                    model = %s,
+                    year = %s,
+                    plate = %s,
+                    color = %s
+                WHERE id = %s AND user_id = %s""",
+                (make, model, year, plate, color, car_id, user_id))
+
+            conn.commit()
+
+    if cursor.rowcount == 0:
+        return {"success": False, "message": "Update failed, because you changed nothing!"}
+
+    return {"success": True, "message": "Car was updated successfully!" }
+
+@app.post("/deleteCar")
+def updateCar(request: Request, car_id: int = Form(...)):
+    try:
+        user_id = get_current_user(request)
+    except:
+        return RedirectResponse("/")
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "DELETE FROM cars WHERE id = %s AND user_id = %s", (car_id, user_id))
+
+            conn.commit()
+
+    if cursor.rowcount == 0:
+        return {"success": False, "message": "Update failed, because you changed nothing!"}
+
+    return {"success": True, "message": "Car was updated successfully!" }

@@ -115,6 +115,38 @@ body {
 }
 
 /* Center buttons container */
+
+#deleteCar{
+    background-color: #d10000;
+}
+#saveCar{
+    background-color: #2a952a;
+}
+
+#back{
+    width: 200px; /* or any width you want */
+    height: 50px; /* uniform height */
+    font-size: 16px;
+    background-color: #333333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#back button:hover{
+    background-color: black;
+    transform: translateY(-2px);
+}
+
+
+#back button:active{
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .center-buttons {
     flex: 1; /* Take all remaining vertical space */
     display: flex;
@@ -124,7 +156,7 @@ body {
 }
 
 /* Make buttons same size */
-.center-buttons button {
+.center-buttons button{
     width: 300px; /* or any width you want */
     height: 100px; /* uniform height */
     font-size: 20px;
@@ -137,12 +169,14 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+
 .center-buttons button:hover {
     background-color: black;
     transform: translateY(-2px);
 }
 
-.center-buttons button:active {
+
+.center-buttons  {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

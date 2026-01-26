@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/dashStyle.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>EzParking - Manage Cars</title>
+</head>
+<body>
+
+    <div class="header">
+        <h1>EzParking <span class="subtitle">/ {{ car[3] }} {{ car[4] }}</span></h1>
+
+        <div class="header-right">
+          <button id="logoutButton"><b>LOGOUT</b></button>
+        </div>
+    </div>
+
+        <div class = "form-container">
+            <div>
+                <button id="back"><u>BACK</u></button>
+            </div>
+        <form id="carEditForm">
+            <div class="input-group">
+                <label for="make">Manufacturer</label><br>
+                <input type="text" id="make" name="make" value = '{{ car[3] }}' required><br><br>
+
+                <label for="model">Model:</label><br>
+                <input type="text" id="model" name="model" value = '{{ car[4] }}' required><br><br>
+
+                <label for="year">Year:</label><br>
+                <input type="number" id="year" name="year" value = '{{ car[5] }}' required><br><br>
+
+                <label for="plate">Plate Number:</label><br>
+                <input type="text" id="plate" name="plate" value = '{{ car[2] }}' required><br><br>
+
+                <label for="color">Color:</label><br>
+                <input type="text" id="color" name="color" value = '{{ car[6] }}' required><br><br>
+
+                <div class="center-buttons">
+                    <button id="deleteCar" type="submit">DELETE CAR</button>
+                    <button id="saveCar" type="submit">SAVE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/static/js/edit.js" defer></script>
+    <script src="/static/js/showToast.js" defer></script>
+    <script src="/static/js/misc.js" defer></script>
+
+</body>
+</html>

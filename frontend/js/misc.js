@@ -1,16 +1,3 @@
-document.getElementById("editCars").addEventListener("click", async () => {
-
-
-})
-
-
-
-
-
-
-
-
-
 //Logout button!!!
 document.getElementById("logoutButton").addEventListener("click", async () => {
 
@@ -29,4 +16,6 @@ document.getElementById("logoutButton").addEventListener("click", async () => {
 
 })
 
-
+document.getElementById("back").addEventListener("click", async () => {
+    window.location.href = "/";
+})
