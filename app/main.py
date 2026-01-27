@@ -279,8 +279,34 @@ def updateCar(request: Request, car_id: int = Form(...)):
 
     with get_db() as conn:
         with conn.cursor() as cursor:
-            cursor.execute(
-                "DELETE FROM cars WHERE id = %s AND user_id = %s", (car_id, user_id))
+            cursor.execute("DELETE FROM cars WHERE id = %s AND user_id = %s", (car_id, user_id))
+
+            conn.commit()
+
+    if cursor.rowcount == 0:
+        return {"success": False, "message": "Update failed, because you changed nothing!"}
+
+    return {"success": True, "message": "Car was updated successfully!" }
+
+@app.post("/addCar")
+def addCar(request: Request):
+    try:
+        user_id = get_current_user(request)
+    except:
+        return RedirectResponse("/")
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            #Grab all users cars..
+            cursor.execute("SELECT * FROM cars WHERE user_id = %s", (user_id,))
+            user_cars = cursor.fetchall()
+
+            if len(user_cars) > 9:
+                return {"success": False, "message": "You may only have 10 cars!" }
+
+            #Adds the car with default inputs.
+            cursor.execute("INSERT INTO cars (user_id, make, model, plate, year)"
+                           "VALUES (%s, %s, %s, CONCAT('TEMP',UNIX_TIMESTAMP()), 2000);", (user_id, "New", "Car"))
 
             conn.commit()
 
