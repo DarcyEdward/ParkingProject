@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/static/css/dashStyle.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
     <title>EzParking - Dashboard</title>
 </head>
 <body>
@@ -39,13 +41,37 @@
       </div>
 
     </aside>
+      <div class="card">
+          <div id="map">
 
+          </div>
+      </div>
 
 
   </div>
 </div>
-    <script src="/static/js/showToast.js" defer></script>
-    <script src="/static/js/edit.js" defer></script>
-    <script src="/static/js/misc.js" defer></script>
 </body>
 </html>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([32.420208,-81.788078], 14);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  fetch("/api/spots")
+    .then(res => res.json())
+    .then(spots => {
+      spots.forEach(spot => {
+        L.marker([spot.lat, spot.lng])
+            .addTo(map)
+            .bindPopup(`<h2><u>${spot.name}</u></h2>
+                Hourly Cost: $${spot.cost_hr}
+                <br>Monthly Cost: $${spot.cost_month}
+                <br><button class="lot-btn" id='${spot.id}'>Parking Here?</button>`
+            );
+      });
+    });
+</script>
+<script src="/static/js/showToast.js" defer></script>
+<script src="/static/js/edit.js" defer></script>
+<script src="/static/js/misc.js" defer></script>

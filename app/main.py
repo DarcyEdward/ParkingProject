@@ -314,3 +314,16 @@ def addCar(request: Request):
         return {"success": False, "message": "Update failed, because you changed nothing!"}
 
     return {"success": True, "message": "Car was updated successfully!" }
+
+@app.get("/api/spots")
+def get_spots(request: Request):
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM parking_lots")
+            rows = cursor.fetchall()
+
+    return [
+        {"name": r[1], "lat": r[2], "lng": r[3], "cost_hr": r[4], "cost_month": r[5], "id": r[0]}
+        for r in rows
+    ]
+
