@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="UTF-8">
+    <title>EzParking - Parking</title>
+</head>
+<body>
+    <div class="header">
+        <a href="/" class = "title-link"><h1>EzParking <span class="subtitle">/ {{ parking_lot[1] }}</span></h1></a>
+
+        <div class="header-right">
+          <button id="logoutButton"><b>LOGOUT</b></button>
+        </div>
+    </div>
+
+    <div class="form-container">
+
+        <div>
+            <button id="back">BACK</button>
+        </div>
+
+        <form class="parkCar">
+            <div class="input-group">
+                <label for="which-car">Which car are you parking?</label>
+                <select name="which-car" id="which-car">
+                    <option>Select one.</option>
+
+                    {% if user_cars %}
+                        {% for car in user_cars %}
+                            <option value="{{ car[0] }}">{{ car[3] }} {{ car[4] }} (Plate: {{ car[2] }})</option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="empty">No registered cars.</option>
+                    {% endif %}
+
+                </select>
+                <br><br>
+                <label for="pass-type">What kind of pass are you looking to get?</label>
+                <select name="pass-type" id="pass-type">
+                    <option>Select pass type.</option>
+
+                    <option value="hour">Hourly (${{ parking_lot[4] }}/hr)</option>
+                    <option value="daily">Daily (${{ parking_lot[4]*3 }}/day)</option>
+                    <option value="month">Monthly (${{ parking_lot[5] }}/month)</option>
+
+                </select>
+                <br><br>
+
+
+                    <div id="hourly-question" hidden>
+                      <label for="hours">How many hours? <i>(minimum 0.5hours)</i></label><br>
+                      <input type="number" id="hours" step=".5" min=".5"><br><br>
+                    </div>
+
+                    <div id="daily-question" hidden>
+                      <label for="until-day">Until when?</label><br>
+                      <input type="date" id="until-day"><br><br>
+                    </div>
+
+                    <div id="monthly-question" hidden>
+                      <label for="until-day">How many months?</label><br>
+                      <input type="number" id="until-month" placeholder="e.g. 3"><br><br>
+                    </div>
+            </div>
+            <div class="receipt">
+            <s>------------------------------------</s>
+            <h2>RECEIPT DETAILS:</h2>
+
+            <p id="rate">Rate: $0/hr * 0hrs</p>
+            <p>Activation Fee: $0.25</p>
+
+            <h3 id="subtotal">SUBTOTAL: $0.0</h3>
+            <p id="taxes">Taxes: $0.0</p>
+
+            <h1 id="total">TOTAL: $0.00</h1>
+            <p id="parkeduntil">Parking approved until: </p>
+            <s>------------------------------------</s>
+            </div><br>
+
+            <div class="center-buttons">
+                <button id="pay" type="submit">PAY</button>
+            </div>
+        </form>
+
+
+    </div>
+</body>
+</html>
+<script>
+const parkingRates = {
+    id: {{ parking_lot[0] }},
+    hourly: {{ parking_lot[4] }},
+    daily: {{ parking_lot[4] * 3 }},
+    monthly: {{ parking_lot[5] }}
+};
+</script>
+
+
+<script src="/static/js/showToast.js" defer></script>
+<script src="/static/js/misc.js" defer></script>
+<script src="/static/cars/parking_lot.js" defer></script>

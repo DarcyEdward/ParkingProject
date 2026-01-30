@@ -87,21 +87,29 @@ body {
     flex-grow: 1;
 }
 
+.input-group select,
 .input-group input {
     padding: 12px 12px;
     border: 2px solid #ccc;
     border-radius: 6px;
     background: transparent;
     color: white;
+    font-family: "Comic Sans MS", "Arial", sans-serif;
     font-size: 16px;
-    width: 98%;
+    width: 100%;
     transition: border-color 0.3s, background 0.3s;
+    box-sizing: border-box;
 }
 
+.input-group select:focus,
 .input-group input:focus {
     outline: none;
     border-color: #fff;
     background: rgba(255, 255, 255, 0.1);
+}
+
+option{
+    background-color: #333333;
 }
 
 .input-group label {
@@ -127,6 +135,7 @@ body {
     width: 200px; /* or any width you want */
     height: 50px; /* uniform height */
     font-size: 16px;
+    font-family: "Comic Sans MS", "Arial", sans-serif;
     background-color: #333333;
     color: white;
     border: none;
@@ -157,6 +166,7 @@ body {
 
 /* Make buttons same size */
 .center-buttons button{
+    font-family: "Comic Sans MS", "Arial", sans-serif;
     width: 300px; /* or any width you want */
     height: 100px; /* uniform height */
     font-size: 20px;
@@ -178,7 +188,6 @@ body {
 
 .center-buttons  {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -229,4 +238,11 @@ body {
 
 .btn:active {
   transform: scale(0.95);
+}
+
+
+.receipt{
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 10%);
+    color: white;
 }

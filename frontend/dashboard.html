@@ -43,7 +43,6 @@
     </aside>
       <div class="card">
           <div id="map">
-
           </div>
       </div>
 
@@ -65,9 +64,10 @@
         L.marker([spot.lat, spot.lng])
             .addTo(map)
             .bindPopup(`<h2><u>${spot.name}</u></h2>
-                Hourly Cost: $${spot.cost_hr}
-                <br>Monthly Cost: $${spot.cost_month}
-                <br><button class="lot-btn" id='${spot.id}'>Parking Here?</button>`
+                Hourly Rate: $${spot.cost_hr}
+                <br>Daily Rate: $${spot.cost_day}
+                <br>Monthly Rate: $${spot.cost_month}
+                <br><a href="/cars/parking_lot?id=${ spot.id }"><button class="lot-btn">Parking Here?</button></a>`
             );
       });
     });

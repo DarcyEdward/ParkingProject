@@ -14,6 +14,7 @@ from app.auth import create_access_token, get_current_user
 
 
 app = FastAPI()
+
 templates = Jinja2Templates(directory="frontend")
 
 #STARTING SERVER
@@ -323,7 +324,42 @@ def get_spots(request: Request):
             rows = cursor.fetchall()
 
     return [
-        {"name": r[1], "lat": r[2], "lng": r[3], "cost_hr": r[4], "cost_month": r[5], "id": r[0]}
+        {"name": r[1], "lat": r[2], "lng": r[3], "cost_hr": r[4], "cost_day": r[4]*3, "cost_month": r[5], "id": r[0]}
         for r in rows
     ]
+
+
+
+############################
+
+# PARKING LOT
+
+############################
+
+@app.get("/cars/parking_lot", response_class=HTMLResponse)
+def parking_lot(request: Request, id: int):
+
+    try:
+        user_id = get_current_user(request)
+    except HTTPException:
+        return RedirectResponse("/")
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM parking_lots WHERE id = %s", (id,))
+            parking_lot = cursor.fetchone()
+            cursor.execute("SELECT * FROM cars WHERE user_id = %s", (user_id,))
+            user_cars = cursor.fetchall()
+
+    if (parking_lot is None):
+        return RedirectResponse("/")
+
+    return templates.TemplateResponse(
+        "cars/parking_lot.html",
+        {
+            "request": request,
+            "parking_lot": parking_lot,
+            "user_cars": user_cars
+        }
+    )
 

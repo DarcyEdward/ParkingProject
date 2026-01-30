@@ -4,7 +4,7 @@ from fastapi import Request, HTTPException
 
 SECRET_KEY = "ezParkingPass"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 20160
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 def create_access_token(user_id: int):
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
