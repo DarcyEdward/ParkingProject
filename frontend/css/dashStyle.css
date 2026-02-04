@@ -1,16 +1,12 @@
-.dashboard-container {
-  max-width: calc(80% - 200px); /* 100px left + 100px right */
-  margin: 40px auto;             /* centers it */
-    color: white;
-    font-size: 20px;
-}
+
 
 .card {
-  background: rgba(255, 255, 255, 0.05); /* subtle contrast */
+  outline: 1px solid rgb(147, 147, 147);
+  background: rgba(255, 255, 255, 0.07); /* subtle contrast */
+  backdrop-filter: blur(6px);
   border-radius: 12px;
   padding: 30px;
   margin-bottom: 40px;
-  backdrop-filter: blur(6px);
 }
 
 .cars-card {
@@ -44,14 +40,18 @@
 }
 
 .dashboard-container {
-  max-width: calc(80% - 200px);
   margin: 40px auto;
+  padding: 0 20px;
+  color: white;
+  font-size: 20px;
+  /*outline: 2px solid red;*/
 }
+
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 320px minmax(800px,1fr); /* right side wider */
-  gap: 24px;
+  grid-template-columns: 320px 900px 320px; /* right side wider */
+  gap: 20px;
   align-items: stretch; /* key line */
   min-height: calc(100vh - 150px);
 }
@@ -90,6 +90,10 @@
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.permits {
+  padding: 0;
 }
 
 

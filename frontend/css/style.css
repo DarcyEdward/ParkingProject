@@ -2,12 +2,20 @@
 body {
     margin: 0;
     height: 100vh;
-    background: #434343;
+    /*background: #434343;*/
+    background: #303d53;
+    /*background: #000000;*/
+    background-image: url("/static/img/wallpaper.jpg");
+    background-size: cover;
+      background-position: center;
+      /*background-repeat: no-repeat;*/
     font-family: Courier New, monospace;
 
     display: flex;
     flex-direction: column; /* Stack header + center-buttons */
 }
+
+
 
 /* Header at top-left */
 .header {
@@ -16,7 +24,8 @@ body {
     align-items: center;            /* vertical alignment */
     padding: 16px 24px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.44);
+    outline: 3px solid #787878;
 }
 
 .subtitle {
@@ -85,6 +94,7 @@ body {
     max-width: calc(70% - 200px); /* 100px left + 100px right */
     margin: 40px auto;             /* centers it */
     flex-grow: 1;
+    outline: 1px solid rgb(147, 147, 147);
 }
 
 .input-group select,

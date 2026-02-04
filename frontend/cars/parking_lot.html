@@ -20,11 +20,11 @@
             <button id="back">BACK</button>
         </div>
 
-        <form class="parkCar">
+        <form class="parkCar" id="parkCar">
             <div class="input-group">
                 <label for="which-car">Which car are you parking?</label>
                 <select name="which-car" id="which-car">
-                    <option>Select one.</option>
+                    <option value="0">Select one.</option>
 
                     {% if user_cars %}
                         {% for car in user_cars %}
@@ -59,8 +59,8 @@
                     </div>
 
                     <div id="monthly-question" hidden>
-                      <label for="until-day">How many months?</label><br>
-                      <input type="number" id="until-month" placeholder="e.g. 3"><br><br>
+                      <label for="until-day">How many months? (30 days/month)</label><br>
+                      <input type="number" min="1" id="until-month" placeholder="e.g. 3"><br><br>
                     </div>
             </div>
             <div class="receipt">
@@ -74,12 +74,13 @@
             <p id="taxes">Taxes: $0.0</p>
 
             <h1 id="total">TOTAL: $0.00</h1>
-            <p id="parkeduntil">Parking approved until: </p>
+            <p>Parking approved until:</p>
+            <p id="parkeduntil"><br></p>
             <s>------------------------------------</s>
             </div><br>
 
             <div class="center-buttons">
-                <button id="pay" type="submit">PAY</button>
+                <button type="submit">CHECK OUT</button>
             </div>
         </form>
 

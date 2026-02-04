@@ -47,6 +47,24 @@
       </div>
 
 
+      <div class="card">
+          <div id="permits">
+              <div class="card-header">
+                  <span><b>ACTIVE PERMITS:</b></span>
+              </div>
+              {% if permits %}
+                  {% for permit in permits %}
+                    <div class="car-item">{{ permit[0] }} {{ permit[1] }} {{ permit[2] }} {{ permit[3] }} {{ permit[4] }} {{ permit[5] }} {{ permit[6] }} {{ permit[7] }} {{ permit[8] }}</div>
+                  {% endfor %}
+                {% else %}
+                  <div class="empty-state">None...</div>
+                {% endif %}
+
+
+          </div>
+      </div>
+
+
   </div>
 </div>
 </body>

@@ -55,8 +55,8 @@ def dashboard(request: Request):
             cursor.execute("SELECT * FROM cars WHERE user_id = %s", (user_id,))
             cars_data = cursor.fetchall()
 
-    print(user_data)
-    print(cars_data)
+            cursor.execute("SELECT * FROM permits WHERE user_id = %s", (user_id,))
+            user_permits = cursor.fetchall()
 
     #send the data to the frontend!
 
@@ -65,7 +65,8 @@ def dashboard(request: Request):
         {
             "request": request,
             "user": user_data,
-            "cars": cars_data
+            "cars": cars_data,
+            "permits": user_permits
         }
     )
 
@@ -362,4 +363,54 @@ def parking_lot(request: Request, id: int):
             "user_cars": user_cars
         }
     )
+
+
+@app.post("/pay")
+def pay_lot(request: Request, lot_id: int = Form(...), car: int = Form(...), pass_type: str = Form(...), hours: float = Form(...), days: int = Form(...), months: int = Form(...)):
+    try:
+        user_id = get_current_user(request)
+    except HTTPException:
+        return RedirectResponse("/")
+
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM cars WHERE user_id = %s and id = %s", (user_id,car))
+            rows = cursor.fetchone()
+
+            if rows is not None:
+                if pass_type == "hour":
+                    if hours > 0.5:
+                        hours = hours * 60 * 60
+
+                        successful_payment(user_id, car, lot_id, hours, "hourly")
+                        return {"success": True, "message": "Payment was successful!" }
+
+                if pass_type == "daily":
+                    if days > 0:
+                        days = days * 24 * 60 * 60
+
+                        successful_payment(user_id, car, lot_id, days, "daily")
+                        return {"success": True, "message": "Payment was successful!"}
+
+                if pass_type == "month":
+                    if months > 0:
+                        months = months * 30 * 24 * 60 * 60
+
+                        successful_payment(user_id, car, lot_id, months, "monthly")
+                        return {"success": True, "message": "Payment was successful!"}
+
+
+
+    return {"success": False, "message": "Error...." }
+
+def successful_payment(user_id: int, car: int, lot_id: int, seconds: float, pass_type: str):
+    with get_db() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("INSERT INTO permits (user_id, car_id, parking_lot_id, permit_type, end_time, price) "
+                "VALUES (%s, %s, %s, %s, DATE_ADD(NOW(), INTERVAL %s SECOND), 0);", (user_id, car, lot_id, pass_type, seconds))
+
+            conn.commit()
+
+
+
 
