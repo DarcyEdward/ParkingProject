@@ -48,15 +48,31 @@ def dashboard(request: Request):
 
 
     with get_db() as conn:
-        with conn.cursor() as cursor:
+        with conn.cursor(dictionary=True) as cursor:
             cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
             user_data = cursor.fetchone()
 
             cursor.execute("SELECT * FROM cars WHERE user_id = %s", (user_id,))
             cars_data = cursor.fetchall()
 
-            cursor.execute("SELECT * FROM permits WHERE user_id = %s", (user_id,))
-            user_permits = cursor.fetchall()
+            with conn.cursor(dictionary=True) as cursor:
+                cursor.execute("""
+                               SELECT
+                                    permits.*,
+                                    parking_lots.name AS lot_name,
+                                    cars.make as car_make,
+                                    cars.model as car_model,
+                                    cars.plate as car_plate
+                                FROM permits
+                                JOIN parking_lots
+                                    ON permits.parking_lot_id = parking_lots.id
+                                JOIN cars
+                                   on permits.car_id = cars.id
+                                WHERE permits.user_id = %s
+                                    AND permits.end_time > NOW()
+                               """, (user_id,))
+
+                user_permits = cursor.fetchall()
 
     #send the data to the frontend!
 
@@ -379,7 +395,7 @@ def pay_lot(request: Request, lot_id: int = Form(...), car: int = Form(...), pas
 
             if rows is not None:
                 if pass_type == "hour":
-                    if hours > 0.5:
+                    if hours >= 0.5:
                         hours = hours * 60 * 60
 
                         successful_payment(user_id, car, lot_id, hours, "hourly")

@@ -23,7 +23,7 @@
   <div class="dashboard-grid">
 
     <aside class="sidebar">
-      <div class="card">Hi, {{ user[1] }}!</div>
+      <div class="card">Hi, {{ user.username }}!</div>
       <div class="card cars-card">
         <div class="card-header">
           <span><b>YOUR CARS:</b></span>
@@ -31,7 +31,7 @@
         </div>
         {% if cars %}
           {% for car in cars %}
-            <div class="car-item"><a href="/cars/edit?id={{ car[0] }}">✎ {{ car[3] }} {{ car[4] }}</a></div>
+            <div class="car-item"><a href="/cars/edit?id={{ car.id }}">✎ {{ car.make }} {{ car.model }}</a></div>
           {% endfor %}
         {% else %}
           <div class="empty-state">None...</div>
@@ -54,10 +54,15 @@
               </div>
               {% if permits %}
                   {% for permit in permits %}
-                    <div class="car-item">{{ permit[0] }} {{ permit[1] }} {{ permit[2] }} {{ permit[3] }} {{ permit[4] }} {{ permit[5] }} {{ permit[6] }} {{ permit[7] }} {{ permit[8] }}</div>
-                  {% endfor %}
+                    <div value="{{ permit.id }}" class="permit-card">
+                        <div class="card-header"><span>{{ permit.lot_name }}</span></div>
+                        <strong>ENDTIME:</strong><br>{{ permit.end_time }}
+                        <br><br><strong>CAR: </strong><br>{{ permit.car_make }} {{ permit.car_model }}
+                        <br><i>({{ permit.car_plate }})</i>
+                    </div>
+                    {% endfor %}
                 {% else %}
-                  <div class="empty-state">None...</div>
+                  <div class="empty-state">None... <br><br><i>(Click the parking lot on the map to get one)</i></div>
                 {% endif %}
 
 
