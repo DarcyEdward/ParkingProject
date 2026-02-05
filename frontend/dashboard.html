@@ -52,6 +52,7 @@
               <div class="card-header">
                   <span><b>ACTIVE PERMITS:</b></span>
               </div>
+            <div class="permits-list">
               {% if permits %}
                   {% for permit in permits %}
                     <div value="{{ permit.id }}" class="permit-card">
@@ -64,6 +65,7 @@
                 {% else %}
                   <div class="empty-state">None... <br><br><i>(Click the parking lot on the map to get one)</i></div>
                 {% endif %}
+            </div>
 
 
           </div>

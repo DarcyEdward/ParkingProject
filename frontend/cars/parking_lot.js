@@ -29,7 +29,7 @@ function updateReceipt(type, amount){
     document.getElementById("parkeduntil").textContent = new Date(new Date().getTime() + amount * 60 * 60 * 1000).toLocaleString();
   }else if(type === "day"){
     type_num = (parkingRates.daily * amount)+ 0.25;
-    document.getElementById("parkeduntil").textContent = new Date(new Date().getTime() + (amount-1) * 24 * 60 * 60 * 1000).toLocaleString().split(" ")[0] + " 3:00 PM";
+    document.getElementById("parkeduntil").textContent = new Date(new Date().getTime() + amount * 24 * 60 * 60 * 1000).toLocaleString().split(" ")[0] + " 3:00 PM";
   }else {
     type_num = (parkingRates.monthly * amount) + 0.25;
     document.getElementById("parkeduntil").textContent = new Date(new Date().getTime() + amount * 24 * 30 * 60 * 60 * 1000).toLocaleString().split(",")[0];

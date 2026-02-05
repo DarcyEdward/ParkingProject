@@ -392,38 +392,46 @@ def pay_lot(request: Request, lot_id: int = Form(...), car: int = Form(...), pas
         with conn.cursor() as cursor:
             cursor.execute("SELECT * FROM cars WHERE user_id = %s and id = %s", (user_id,car))
             rows = cursor.fetchone()
+            cursor.execute("SELECT cost_hr, cost_month FROM parking_lots WHERE id = %s", (lot_id,))
+            prices = cursor.fetchone()
 
             if rows is not None:
                 if pass_type == "hour":
                     if hours >= 0.5:
+                        price = prices[0] * hours
                         hours = hours * 60 * 60
 
-                        successful_payment(user_id, car, lot_id, hours, "hourly")
+                        successful_payment(user_id, car, lot_id, hours, "hourly", price)
                         return {"success": True, "message": "Payment was successful!" }
 
                 if pass_type == "daily":
                     if days > 0:
+                        price = (prices[0] * 3) * days
                         days = days * 24 * 60 * 60
 
-                        successful_payment(user_id, car, lot_id, days, "daily")
+                        successful_payment(user_id, car, lot_id, days, "daily", price)
                         return {"success": True, "message": "Payment was successful!"}
 
                 if pass_type == "month":
                     if months > 0:
+                        price = prices[1] * months
                         months = months * 30 * 24 * 60 * 60
 
-                        successful_payment(user_id, car, lot_id, months, "monthly")
+                        successful_payment(user_id, car, lot_id, months, "monthly", price)
                         return {"success": True, "message": "Payment was successful!"}
 
 
 
     return {"success": False, "message": "Error...." }
 
-def successful_payment(user_id: int, car: int, lot_id: int, seconds: float, pass_type: str):
+def successful_payment(user_id: int, car: int, lot_id: int, seconds: float, pass_type: str, price: float):
+
+    price = (price * 1.04) + 0.25
+
     with get_db() as conn:
         with conn.cursor() as cursor:
             cursor.execute("INSERT INTO permits (user_id, car_id, parking_lot_id, permit_type, end_time, price) "
-                "VALUES (%s, %s, %s, %s, DATE_ADD(NOW(), INTERVAL %s SECOND), 0);", (user_id, car, lot_id, pass_type, seconds))
+                "VALUES (%s, %s, %s, %s, DATE_ADD(NOW(), INTERVAL %s SECOND), %s);", (user_id, car, lot_id, pass_type, seconds, price,))
 
             conn.commit()
 

@@ -1,7 +1,7 @@
 
 .permit-card,
 .card {
-  outline: 1px solid rgb(147, 147, 147);
+  border: 1px solid rgb(147, 147, 147);
   background: rgba(255, 255, 255, 0.07); /* subtle contrast */
   backdrop-filter: blur(6px);
   border-radius: 12px;
@@ -10,16 +10,56 @@
 }
 
 .permit-card {
+  border: 2px solid rgb(147, 147, 147);
   font-size: 16px;
   padding: 20px;
   margin-bottom: 13px;
-  min-width: 220px;
-  max-width: 220px;
+  min-width: 150px;
 }
+
 
 .cars-card {
   flex-grow: 1;
 }
+
+#permits {
+    display: flex;
+    flex-direction: column;
+    height: 76vh;
+}
+
+#permits > .card-header {
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.permits-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;      /* space for scrollbar */
+    box-sizing: border-box;
+}
+
+.permits-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.permits-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.permits-list::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+}
+
+.permits-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+
 
 .sidebar {
   display: flex;
