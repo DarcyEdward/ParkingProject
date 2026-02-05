@@ -23,7 +23,11 @@
   <div class="dashboard-grid">
 
     <aside class="sidebar">
-      <div class="card">Hi, {{ user.username }}!</div>
+        <div class="card">
+            <span class="profile-header">Hi, {{ user.username }}!
+              <a href="/settings"><img src="/static/img/setting.png" alt="Settings button" id="settings-btn"></a></span>
+        </div>
+
       <div class="card cars-card">
         <div class="card-header">
           <span><b>YOUR CARS:</b></span>
@@ -92,7 +96,7 @@
                 Hourly Rate: $${spot.cost_hr}
                 <br>Daily Rate: $${spot.cost_day}
                 <br>Monthly Rate: $${spot.cost_month}
-                <br><a href="/cars/parking_lot?id=${ spot.id }"><button class="lot-btn">Parking Here?</button></a>`
+                <br><br><a href="/cars/parking_lot?id=${ spot.id }"><button class="lot-btn">Parking Here?</button></a>`
             );
       });
     });

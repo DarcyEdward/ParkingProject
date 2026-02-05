@@ -86,6 +86,30 @@ def dashboard(request: Request):
         }
     )
 
+@app.get("/settings", response_class=HTMLResponse)
+def go_settings(request: Request):
+    try:
+        user_id = get_current_user(request)
+    except HTTPException:
+        return RedirectResponse("/")
+
+    #The user is in fact logged in!
+    with get_db() as conn:
+        with conn.cursor(dictionary=True) as cursor:
+            cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+            user_data = cursor.fetchone()
+
+            conn.commit()
+
+    return templates.TemplateResponse(
+        "settings.html",
+        {
+            "request": request,
+            "user": user_data
+        }
+    )
+
+
 
 @app.get("/me")
 def me(user_id: int = Depends(get_current_user)):

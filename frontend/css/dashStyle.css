@@ -14,8 +14,23 @@
   font-size: 16px;
   padding: 20px;
   margin-bottom: 13px;
-  min-width: 150px;
+  width: 100%;
+  box-sizing: border-box;
 }
+
+
+#settings-btn {
+    width: 17px;
+    height: 17px;
+    margin-left: auto;
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#settings-btn:hover {
+    transform: rotate(135deg) scale(1.05);
+}
+
 
 
 .cars-card {
@@ -66,7 +81,6 @@
   flex-direction: column;
 }
 
-
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -75,6 +89,13 @@
     font-size: 25px;
   border-bottom: 2px solid rgba(255,255,255,0.2);
   text-transform: uppercase;
+}
+
+.profile-header{
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+    font-size: 25px;
 }
 
 .permit-item,
